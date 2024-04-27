@@ -14,7 +14,7 @@ Color Palette:
 Primary Color: rbga(13, 27, 42);
 Secondary Color: rbga(27, 38, 59);
 Tertiary Color/Text Color: rbga(224, 225, 221);
-Lighter Color: rbga(65, 90, 119);
-Lighter Color II: rbga(65, 90, 119);
+Lighter Color: rgba(65, 90, 119);
+Lighter Color II: rgba(65, 90, 119);
 
 font-family: "DM Sans", sans-serif;

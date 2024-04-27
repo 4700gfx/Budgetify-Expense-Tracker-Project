@@ -15,6 +15,12 @@ body{
   background-color: rgba(13, 27, 42);
 }
 
+h2{
+  color: rgba(224, 225, 221);
+  margin-top: 40px;
+  font-size: 35px;
+}
+
 nav{
   color: rgba(224, 225, 221);
   margin: 0px 50px;
@@ -31,6 +37,15 @@ nav p{
 nav li {
   list-style-type: none;
   margin-inline: 10px;
+  padding: 10px 20px;
+  border-radius: 20px;
+
+}
+
+nav li:hover{
+  background-color: rgba(13, 27, 42);
+  transition: ease-in-out 1s linear;
+
 }
 
 button{
@@ -39,4 +54,39 @@ button{
   border-radius: 10px;
   font-family: "DM Sans", sans-serif;
   color: rgba(224, 225, 221);
+  cursor: pointer;
 }
+
+
+table {
+  border-collapse: collapse;
+  border-style: hidden; /* hide standard table (collapsed) border */
+  box-shadow: 0 0 0 1px #666; /* this draws the table border  */ 
+  margin: 30px 50px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  cursor: pointer;
+  width: 1000px;
+  color:rgba(224, 225, 221);
+  background-color: rgba(65, 90, 119);
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(224, 225, 221, .3);
+}
+
+tr:nth-child(even) {
+  background-color: rgba(224, 225, 221);
+}
+
+table button{
+  background-color: rgba(65, 90, 119);
+  border: none;
+}
+

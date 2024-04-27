@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="global-classes.css">
   <link rel="stylesheet" href="main-styles.css">
-  <title>Budgetify[Expense & Budget Tracker]</title>
+  <title>Budgetify [Expense & Budget Tracker]</title>
 </head>
 <body>
   <nav class="center">
@@ -21,21 +21,103 @@
         <li>Contact Us</li>
       </ul>
     </div>
-    <input type="text" class="search-bar">
+    <input type="text" class="search-bar" placeholder=" Search for Transaction">
   </nav>
 
   <section class="dashboard-container center">
-    <div class="dashboard-box" id="expected-budget"></div>
-    <div class="dashboard-box" id="current-budget"></div>
-    <div class="dashboard-box" id="total-balance"></div>
-    <div class="dashboard-box" id="total-savings"></div>
+    <div class="dashboard-box">
+      <h1 class="center">Expected Budget:</h1>
+      <span class="center totals" id="expected-budget">$1000.00</span>
+      <p>This includes all of your total income from your bank accounts and cash. <br>
+        Set your total budget to an amount that you know that you will be recieving. 
+      </p>
+    </div>
+
+    <div class="dashboard-box" id="current-budget">
+      <h1 class="center">Current Budget:</h1>
+      <span class="center totals" id="current-budget">$575.35</span>
+      <p>This section will show you where you are with your current budget and if you are about to be over. 
+          Make sure you keep your transactions up to date to ensure an accurate estimate.
+      </p>
+    </div>
+
+    <div class="dashboard-box" id="total-balance">
+      <h1 class="center">Total Balance:</h1>
+      <span class="center totals" id="total-balance">$55.75</span>
+      <p>This includes all of your total income from your bank accounts and cash. <br>
+        Set your total budget to an amount that you know that you will be recieving. 
+      </p>
+    </div>
+
+    <div class="dashboard-box" id="total-savings">
+      <h1 class="center">Total Savings:</h1>
+      <span class="center totals" id="total-savings">$100.00</span>
+      <p>This section highlights your total savings based on what you have saved.
+        Keep your budget updated with any savings you have actually saved for them not to count againist your total savings.
+      </p>
+    </div>
   </section>
+
   <div class="button-console center">
-    <button id="add-transaction"> Add Transaction</button>
+    <button id="add-transaction" class="add-transaction"> Add Transaction</button>
     <button id="search-transaction">Search for Transaction</button>
     <button id="remove-transaction">Remove Transaction</button>
   </div>
   
+  <section class="transaction-section">
+  <div>
+    <h2 class="center">Expenses</h2>
+    <table id="expenseTable">
+      <thead>
+          <tr>
+              <th id="sortDescription">Description</th>
+              <th id="sortAmount">Amount</th>
+              <th>Category</th>
+              <th id="sortDate">Date</th>
+              <th>Actions</th>
+          </tr>
+      </thead>
+      <tbody>
+          <!-- Expenses will be added here -->
+        <tr>
+          <td>New Car</td>
+          <td>$100.00</td>
+          <td>Bills</td>
+          <td>10/29</td>
+          <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
+        </tr>
 
+        <tr>
+          <td>New Car</td>
+          <td>$100.00</td>
+          <td>Bills</td>
+          <td>10/29</td>
+          <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
+        </tr>
+
+        <tr>
+          <td>New Car</td>
+          <td>$100.00</td>
+          <td>Bills</td>
+          <td>10/29</td>
+          <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
+        </tr>
+
+        <tr>
+          <td>New Car</td>
+          <td>$100.00</td>
+          <td>Bills</td>
+          <td>10/29</td>
+          <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
+        </tr>
+
+      </tbody>
+  </table>
+  </div>
+
+  </section>
+<script src="script.js"></script>
 </body>
+
 </html>
+
