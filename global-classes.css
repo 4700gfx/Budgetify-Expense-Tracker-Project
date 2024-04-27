@@ -1,0 +1,42 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.center{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body{
+  font-family: "DM Sans", sans-serif;
+  background-color: rgba(13, 27, 42);
+}
+
+nav{
+  color: rgba(224, 225, 221);
+  margin: 0px 50px;
+  height: 75px;
+
+
+}
+
+nav p{
+  font-size: 22px;
+}
+
+
+nav li {
+  list-style-type: none;
+  margin-inline: 10px;
+}
+
+button{
+  height: 30px;
+  width: 250px;
+  border-radius: 10px;
+  font-family: "DM Sans", sans-serif;
+  color: rgba(224, 225, 221);
+}

@@ -1,0 +1,36 @@
+.nav-container{
+  background-color: rgba(65, 90, 119);
+  border-radius: 20px;
+  margin: 0px 100px;
+  padding: 22px 30px;
+  height: 35px;
+
+}
+
+
+.search-bar {
+  height: 25px;
+  width: 200px;
+  border: none;
+  border-radius: 20px;
+
+}
+
+.dashboard-container{
+  height: 50vh;
+
+}
+
+.dashboard-box{
+  height: 300px;
+  width: 300px;
+  border-radius: 5px;
+  background-color: rgba(65, 90, 119);
+  margin-inline: 20px;
+}
+
+.button-console button{
+  background-color: rgba(65, 90, 119);
+  border: none;
+  margin-inline: 20px;
+}

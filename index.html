@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="global-classes.css">
+  <link rel="stylesheet" href="main-styles.css">
+  <title>Budgetify[Expense & Budget Tracker]</title>
+</head>
+<body>
+  <nav class="center">
+    <p>Budgetify</p>
+    <div class="nav-container center">
+      <ul class="center">
+        <li>View Budget</li>
+        <li>Overview</li>
+        <li>Edit Transactions</li>
+        <li>Contact Us</li>
+      </ul>
+    </div>
+    <input type="text" class="search-bar">
+  </nav>
+
+  <section class="dashboard-container center">
+    <div class="dashboard-box" id="expected-budget"></div>
+    <div class="dashboard-box" id="current-budget"></div>
+    <div class="dashboard-box" id="total-balance"></div>
+    <div class="dashboard-box" id="total-savings"></div>
+  </section>
+  <div class="button-console center">
+    <button id="add-transaction"> Add Transaction</button>
+    <button id="search-transaction">Search for Transaction</button>
+    <button id="remove-transaction">Remove Transaction</button>
+  </div>
+  
+
+</body>
+</html>
