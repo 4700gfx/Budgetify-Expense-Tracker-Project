@@ -64,50 +64,56 @@
     <button id="remove-transaction">Remove Transaction</button>
   </div>
   
+  <!-- Transaction Table -->
   <section class="transaction-section">
   <div>
-    <h2 class="center">Expenses</h2>
+    <h2 class="center">Income & Expenses</h2>
     <table id="expenseTable">
       <thead>
           <tr>
               <th id="sortDescription">Description</th>
               <th id="sortAmount">Amount</th>
-              <th>Category</th>
+              <th id="sortCategory">Category</th>
               <th id="sortDate">Date</th>
+              <th id="sortId">ID #</th>
               <th>Actions</th>
           </tr>
       </thead>
       <tbody>
           <!-- Expenses will be added here -->
         <tr>
-          <td>New Car</td>
-          <td>$100.00</td>
-          <td>Bills</td>
+          <td>PSN Subscription</td>
+          <td>-$9.99</td>
+          <td>Subscription</td>
           <td>10/29</td>
+          <td>F43DS</td>
           <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
         </tr>
 
         <tr>
-          <td>New Car</td>
-          <td>$100.00</td>
-          <td>Bills</td>
-          <td>10/29</td>
+          <td>Paycheck from Work</td>
+          <td>+$1200.00</td>
+          <td>Check</td>
+          <td>10/31</td>
+          <td>XW54C</td>
           <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
         </tr>
 
         <tr>
-          <td>New Car</td>
-          <td>$100.00</td>
+          <td>AT&T Payment</td>
+          <td>-$125.00</td>
           <td>Bills</td>
-          <td>10/29</td>
+          <td>10/31</td>
+          <td>RK76X</td>
           <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
         </tr>
 
         <tr>
-          <td>New Car</td>
-          <td>$100.00</td>
-          <td>Bills</td>
-          <td>10/29</td>
+          <td>TGI Friday</td>
+          <td>-$100.00</td>
+          <td>Dining & Food</td>
+          <td>10/31</td>
+          <td>D43TH</td>
           <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
         </tr>
 
@@ -116,6 +122,34 @@
   </div>
 
   </section>
+
+
+  <!-- Modal Window -->
+  <div id="modal-window" class="modal center">
+    <div class="modal-content">
+      <span id="close-window" class="close">&times</span>
+      <h1 class="modal-title center">💸 Add A Transaction 💸</h1>
+      <form id="expenseForm">
+        <p>
+          Add a Transaction to start the Expense/Budget Tracker.
+          Once a transaction has been added, you will see your budget calculated.
+          Feel free to use Other in transactions that does not fit any of the Catagories.
+        </p>
+        <input type="text" id="description" placeholder=" Description" required>
+        <input type="number" id="amount" placeholder=" Amount" step="0.01" required>
+        <select id="Catagories" name="cars">
+          <option value="income">ACH/Direct Deposit</option>
+          <option value="bill">Utilities</option>
+          <option value="savings">Savings</option>
+          <option value="audi">Misc.</option>
+        </select>
+        <input type="date" id="date" required>
+        <button id="enter-transaction" class="center" type="submit">Enter Transaction</button>
+      </form>
+    </div>
+    </div>
+  <div id="overlay-window" class="overlay"></div>
+
 <script src="script.js"></script>
 </body>
 

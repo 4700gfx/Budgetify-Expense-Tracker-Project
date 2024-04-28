@@ -11,7 +11,7 @@ Find the color palette and font information below:
 
 Color Palette:
 
-Primary Color: rbga(13, 27, 42);
+Primary Color: rgba(13, 27, 42);
 Secondary Color: rbga(27, 38, 59);
 Tertiary Color/Text Color: rbga(224, 225, 221);
 Lighter Color: rgba(65, 90, 119);
