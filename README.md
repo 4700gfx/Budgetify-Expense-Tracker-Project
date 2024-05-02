@@ -18,3 +18,7 @@ Lighter Color: rgba(65, 90, 119);
 Lighter Color II: rgba(65, 90, 119);
 
 font-family: "DM Sans", sans-serif;
+
+
+#Main Functionality
+

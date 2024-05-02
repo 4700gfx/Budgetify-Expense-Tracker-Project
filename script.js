@@ -26,57 +26,10 @@ const closeModalWindow = () => {
 
 }
 
-// Function to handle form submission with validation
-const handleFormSubmit = (event) => {
-  event.preventDefault(); // Prevent the default form submission behavior
-  
-  // Get the input values from the form
-  const descriptionInput = document.getElementById('description').value;
-  const amountInput = document.getElementById('amount').value;
-  const categoryInput = document.getElementById('category').value;
-  const dateInput = document.getElementById('date').value;
+//Re-Add Function Here:
 
-  // Validation checks
-  if (!descriptionInput.trim()) {
-    alert("Please enter a description for the expense."); // Alert if no description
-    return; // Exit the function
-  }
 
-  if (!amountInput.trim() || isNaN(parseFloat(amountInput))) {
-    alert("Please enter a valid amount for the expense."); // Alert if no valid amount
-    return; // Exit the function
-  }
 
-  if (!categoryInput.trim()) {
-    alert("Please enter a category for the expense."); // Alert if no category
-    return; // Exit the function
-  }
-
-  if (!dateInput.trim()) {
-    alert("Please enter a date for the expense."); // Alert if no date
-    return; // Exit the function
-  }
-
-  // If all validations pass, create the new expense
-  const description = descriptionInput.trim(); // Ensure non-empty description
-  const amount = parseFloat(amountInput); // Convert to a float
-  const category = categoryInput.trim(); // Ensure non-empty category
-  const date = dateInput; // Ensure non-empty date
-
-  const newExpense = {
-    id: generateId(), // Assuming a function to generate unique IDs
-    description,
-    amount,
-    category,
-    date,
-  };
-
-  addExpense(newExpense); // Add the expense to the list
-  event.target.reset(); // Clear the form fields after successful submission
-};
-
-// Add the event listener to the form
-document.getElementById('expenseForm').addEventListener('submit', handleFormSubmit);
 
 // Function to add an expense to the array and render the updated table
 const addExpense = (expense) => {
