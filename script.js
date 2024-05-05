@@ -7,6 +7,7 @@ let addTransactionButton = document.getElementById("add-transaction");
 let enterTransactionButton = document.getElementById("enter-transaction");
 let deleteButton = document.getElementById("delete-button");
 let expenses = [];
+let savings = [];
 
 //Transactions Functions 
 
@@ -57,6 +58,8 @@ const addExpense = (description, amount, category, date) => {
     console.error("Invalid date: Please provide a valid date.");
     return; // Exit early
   }
+
+  
 
   // If all validations pass, add the new expense to the array and re-render the table
   expenses.push(newExpense); // Add to the expenses array
