@@ -8,10 +8,6 @@ let enterTransactionButton = document.getElementById("enter-transaction");
 
 let expenses = [];
 
-
-
-
-
 //Transactions Functions 
 
 const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
@@ -26,53 +22,8 @@ const closeModalWindow = () => {
 
 }
 
-//Re-Add Function Here:
-// Function to handle form submission with validation
-// Function to handle form submission with validation
 
-
-
-const validationCheck = function(description, amountInput, category, date){
-    // Validation checks with early return on failure
-    if (typeof description == "Number" || description !== "string") { // Ensure description is not empty
-      alert("Please enter a description for the expense.");
-      return; // Exit early if invalid
-    }
-  
-    // Parse the amount and ensure it's a valid number
-    const amount = parseFloat(amountInput); // Convert to a float
-    if (isNaN(amount)) { // Check for valid number
-      alert("Please enter a valid number for the amount.");
-      deleteExpense();
-      return; // Exit early
-    }
-  
-    if (!category) { // Ensure category is not empty
-      alert("Please enter a category for the expense.");
-      deleteExpense();
-      return; // Exit early
-    }
-  
-    if (!date) { // Ensure date is not empty
-      alert("Please enter a valid date for the expense.");
-      deleteExpense();
-      return; // Exit early
-    }
-}
-
-
-const handleFormSubmit = (event) => {
-  event.preventDefault(); // Prevent default form behavior (like page reload)
-
-  // Get the form input values by ID
-  const description = document.getElementById('description').value.trim();
-  const amountInput = document.getElementById('amount').value.trim(); // Use trim to remove spaces
-  const category = document.getElementById('category').value.trim();
-  const date = document.getElementById('date').value; // Retrieve the date as a string
-  
-  validationCheck(description, amountInput, category, date); //
-
-  // If all validations pass, create a new expense object
+const addExpense = (description, amount, category, date) => {
   const newExpense = {
     id: generateId(), // Generate unique ID
     description,
@@ -101,7 +52,7 @@ const renderExpenses = () => {
   tableBody.innerHTML = ''; // Clear existing content
 
   expenses.forEach((expense) => {
-    const row = document.createElement('tr');
+      const row = document.createElement('tr');
 
     row.innerHTML = `
       <td>${expense.description}</td>
@@ -112,19 +63,27 @@ const renderExpenses = () => {
       <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
     `;
 
-    tableBody.appendChild(row);
+      tableBody.appendChild(row);
   });
 };
 
 
 //EVent Handlers for Transaction
+document.getElementById('expenseForm').addEventListener('submit', (e) => {
+  e.preventDefault(); // Prevent default form submission
+
+  const description = document.getElementById('description').value;
+  const amount = document.getElementById('amount').value;
+  const category = document.getElementById('category').value;
+  const date = document.getElementById('date').value;
+
+  addExpense(description, amount, category, date); // Add the expense
+
+  e.target.reset(); // Clear the form
+
+});
 
 enterTransactionButton.addEventListener('click', addExpense);
-addTransactionButton.addEventListener('click', function (){
-  modalWindow.style.display = "none";
-  overlayWindow.style.display = "none";
-} );
-closeButton.addEventListener('click', closeModalWindow);
 
 
 
