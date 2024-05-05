@@ -5,7 +5,7 @@ let overlayWindow = document.getElementById("overlay-window");
 let closeButton = document.getElementsByClassName("close")[0];
 let addTransactionButton = document.getElementById("add-transaction");
 let enterTransactionButton = document.getElementById("enter-transaction");
-
+let deleteButton = document.getElementById("delete-button");
 let expenses = [];
 
 //Transactions Functions 
@@ -24,17 +24,45 @@ const closeModalWindow = () => {
 
 
 const addExpense = (description, amount, category, date) => {
+  // Create a new expense object early in the function
   const newExpense = {
-      id: generateId(),
-      description,
-      amount: parseFloat(amount),
-      category,
-      date,
+    id: generateId(), // Generate a unique ID
+    description,
+    amount: parseFloat(amount), // Ensure the amount is parsed to a float
+    category,
+    date,
   };
 
-  expenses.push(newExpense);
-  renderExpenses(); // Re-render the table
+  // Validate the description to avoid invalid data
+  if (description === '[object MouseEvent]' || !description) {
+    console.error("Invalid description: Please provide a valid description.");
+    return; // Exit early if invalid
+  }
+
+
+  // Validate the amount to ensure it's a valid number
+  if (isNaN(newExpense.amount)) {
+    console.error("Invalid amount: Please provide a valid number.");
+    return; // Exit early if invalid
+  }
+
+  // Validate category
+  if (!category.trim()) {
+    console.error("Invalid category: Please provide a valid category.");
+    return; // Exit early
+  }
+
+  // Validate date
+  if (!date.trim()) {
+    console.error("Invalid date: Please provide a valid date.");
+    return; // Exit early
+  }
+
+  // If all validations pass, add the new expense to the array and re-render the table
+  expenses.push(newExpense); // Add to the expenses array
+  renderExpenses(); // Re-render the table to reflect the new addition
 };
+
 
 const renderExpenses = () => {
   const tableBody = document.getElementById('expenseTable').querySelector('tbody');
@@ -45,14 +73,21 @@ const renderExpenses = () => {
 
       row.innerHTML = `
           <td>${expense.description}</td>
-          <td>${expense.amount.toFixed(2)}</td>
+          <td>$${expense.amount.toFixed(2)}</td>
           <td>${expense.category}</td>
           <td>${expense.date}</td>
-          <td><button onclick="deleteExpense('${expense.id}')">Delete</button></td>
+          <td>${expense.id}</td>
+          <td><button id="delete-button" onclick="deleteExpense('${expense.id}')">Delete</button></td>
       `;
 
       tableBody.appendChild(row);
   });
+};
+
+
+const deleteExpense = (expenseId) => {
+  expenses = expenses.filter((expense) => expense.id !== expenseId); // Remove the expense with the given ID
+  renderExpenses(); // Re-render the table to reflect changes
 };
 
 
@@ -74,3 +109,10 @@ document.getElementById('expenseForm').addEventListener('submit', (e) => {
 enterTransactionButton.addEventListener('click', addExpense);
 
 closeButton.addEventListener('click', closeModalWindow);
+
+addTransactionButton.addEventListener('click', function(e) {
+  modalWindow.style.display = "flex";
+  overlayWindow.style.display = "block";
+});
+
+deleteButton.addEventListener('click', deleteExpense);
