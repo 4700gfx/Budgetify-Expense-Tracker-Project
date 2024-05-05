@@ -94,6 +94,7 @@ const deleteExpense = (expenseId) => {
 };
 
 
+
 //EVent Handlers for Transaction
 document.getElementById('expenseForm').addEventListener('submit', (e) => {
   e.preventDefault(); // Prevent default form submission
