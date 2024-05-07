@@ -18,6 +18,9 @@ let deleteButton = document.getElementById("delete-button");
 //Intial Arrays and Objects 
 let expenses = [];
 let savings = [];
+let totalBudget = 0;
+let totalCurrentBudgetAmount = 0;
+
 const categoryMap = {};
 
 
