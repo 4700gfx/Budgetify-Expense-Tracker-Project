@@ -16,6 +16,16 @@
 
 }
 
+.search-button{
+  background-color:  rgb(38, 60, 85);
+  border: none;
+  margin: 10px;
+  height: 30px;
+  width: 150px;
+}
+
+
+
 .dashboard-container{
   color: rgba(224, 225, 221);
   height: 50vh;
@@ -45,9 +55,10 @@
 
 
 .totals{
-  font-size: 50px;
+  font-size: 45px;
   font-weight: 500;
   margin-top: 30px;
+  padding: 5px;
 }
 
 

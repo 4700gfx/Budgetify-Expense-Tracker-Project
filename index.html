@@ -21,29 +21,30 @@
         <li>Contact Us</li>
       </ul>
     </div>
-    <input type="text"  id="searchBar" class="search-bar" placeholder=" Search for Transaction">
+    <input type="text"  id="searchInput" class="search-bar" placeholder=" Search for Transaction">
+    <button class="search-button">Search</button>
   </nav>
 
   <section class="dashboard-container center">
     <div class="dashboard-box">
       <h1 class="center">Expected Budget:</h1>
-      <span class="center totals" id="expected-budget">$1000.00</span>
+      <span class="center totals" id="expected-budget">$0</span>
       <p>This includes all of your total income from your bank accounts and cash. <br>
-        Set your total budget to an amount that you know that you will be recieving. 
+        Set your total budget to an amount that you know that you will be recieving during the month. 
       </p>
     </div>
 
     <div class="dashboard-box">
       <h1 class="center">Current Budget:</h1>
-      <span class="center totals" id="current-budget">$575.35</span>
+      <span class="center totals" id="current-budget">$0</span>
       <p>This section will show you where you are with your current budget and if you are about to be over. 
           Make sure you keep your transactions up to date to ensure an accurate estimate.
       </p>
     </div>
 
     <div class="dashboard-box" id="total-balance">
-      <h1 class="center">Total Balance:</h1>
-      <span class="center totals" id="total-balance">$55.75</span>
+      <h1 class="center">Total Expenses:</h1>
+     <span class="center totals" id="total-expenses">$0</span>
       <p>This includes all of your total income from your bank accounts and cash. <br>
         Set your total budget to an amount that you know that you will be recieving. 
       </p>
@@ -51,7 +52,7 @@
 
     <div class="dashboard-box">
       <h1 class="center">Total Savings:</h1>
-      <span class="center totals" id="total-savings">$100.00</span>
+      <span class="center totals" id="total-savings">$0</span>
       <p>This section highlights your total savings based on what you have saved.
         Keep your budget updated with any savings you have actually saved for them not to count againist your total savings.
       </p>
@@ -129,13 +130,12 @@
         </p>
         <input type="text" id="description" placeholder=" Description" required>
         <input type="number" id="amount" placeholder=" Amount" step="0.01" required>
-        <select id="category" name="cars">
-          <option value="Income">ACH/Direct Deposit</option>
-          <option value="Bills">Utilities</option>
-          <option value="Subscriptions">Subscriptions</option>
-          <option value="Savings">Savings</option>
-          <option value="Misc">Misc.</option>
-          <option value="Main-Bills">Main Bills</option>
+        <select id="category" name="Type of Income or Expense">
+          <option value="income">ACH/Direct Deposit</option>
+          <option value="bills">Bills</option>
+          <option value="subscription">Subscriptions</option>
+          <option value="savings">Savings</option>
+          <option value="misc">Misc.</option>
         </select>
         <input type="date" id="date" required>
         <button id="enter-transaction" class="center" type="submit">Enter Transaction</button>

@@ -28,17 +28,37 @@ const categoryMap = {};
 
 //Function to Update Total Savings 
 //ADD FUNCTIONALITY FOR ALL CATEGORIES
-const updateTotals = function() {
-  // Ensure categoryMap.Savings and its total property exist
-  if (categoryMap.Savings && typeof categoryMap.Savings.total === 'number') {
-    const totalSavingsElement = document.getElementById('total-savings'); // Get the span by ID
-    const formattedTotal = `$ ${categoryMap.Savings.total.toFixed(2)}`; // Format with dollar sign and two decimal places
+const updateTotals = () => {
+  const categorySelect = document.getElementById('category');
+  const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+  const categoryText = selectedOption.textContent.trim(); // Get the text of the selected option
 
-    totalSavingsElement.textContent = formattedTotal; // Update the text content of the span
+  // Find the corresponding total element based on the selected category text
+  let totalElement = null;
+  let categoriesToUpdate = []; // Array to store categories for combined totals
+  if (categoryText === "Subscriptions" || categoryText === "Bills") {
+    totalElement = document.getElementById("total-expenses");
+    categoriesToUpdate = ["Subscriptions", "Bills"];
+  } else if (categoryText === "ACH/Direct Deposit" || categoryText === "Savings") {
+    totalElement = document.getElementById("total-savings");
+    categoriesToUpdate = ["ACH/Direct Deposit", "Savings"];
   } else {
-    console.error("Savings total is undefined or not a number."); // Log an error if Savings doesn't exist
+    console.error(`UI element for category ${categoryText} not found.`);
+    return; // Exit the function if category element is not found
   }
+
+  // Get the total for the selected categories from expenses array
+  let total = 0;
+  expenses.forEach(expense => {
+    if (categoriesToUpdate.includes(expense.category)) {
+      total += parseFloat(expense.amount);
+    }
+  });
+
+  // Update the total element with the formatted updated total amount
+  totalElement.textContent = `$ ${total.toFixed(2)}`;
 };
+
 
 
 //ID Generator Function
@@ -93,28 +113,22 @@ const addExpense = (description, amount, category, date) => {
   }
 
   // If all validations pass, add the new expense to the array and re-render the table
-  expenses.push(newExpense); // Add to the expenses array
+  expenses.push(newExpense);
 
+  // Update the categoryMap with the new expense
+  if (categoryMap[category]) {
+    categoryMap[category].amounts.push(newExpense.amount); // Add the amount
+    categoryMap[category].total += newExpense.amount; // Update the total
+  } else {
+    // Create a new category entry if it doesn't exist
+    categoryMap[category] = {
+      amounts: [newExpense.amount], // Create an array with the initial amount
+      total: newExpense.amount,     // Set the initial total
+    };
+  }
 
- // Check if the category already exists in the map
- if (categoryMap[category]) {
-  // Add the expense amount to the existing category array
-  categoryMap[category].amounts.push(newExpense.amount);
-
-  // Update the total for the category
-  categoryMap[category].total += newExpense.amount;
-} else {
-  // If the category doesn't exist, create a new entry
-  categoryMap[category] = {
-    amounts: [newExpense.amount], // Create a new array with the expense amount
-    total: newExpense.amount,     // Set the initial total
-  };
-}
-
-
-  renderExpenses(); // Re-render the table to reflect the new addition
-  console.log(categoryMap.Savings.total);
-  updateTotals(); // Update the totals for newly
+  renderExpenses(); // Re-render the table
+  updateTotals();  // Update the category totals in the UI
 };
 
 
@@ -158,25 +172,36 @@ const filterExpensesById = (query) => {
 //Function to Delete an Expense
 const deleteExpense = (expenseId) => {
   // Find the expense to delete
-  const expenseToDelete = expenses.find((expense) => expense.id === expenseId);
+  const expenseIndex = expenses.findIndex((expense) => expense.id === expenseId);
 
-  if (expenseToDelete) {
+  if (expenseIndex !== -1) {
+    const expenseToDelete = expenses[expenseIndex];
+    const category = expenseToDelete.category;
+    const amount = expenseToDelete.amount;
+
     // Remove the expense from the main expenses array
-    expenses = expenses.filter((expense) => expense.id !== expenseId);
+    expenses.splice(expenseIndex, 1);
 
     // Update the corresponding category in categoryMap
-    if (categoryMap[expenseToDelete.category]) {
-      // Subtract the deleted expense's amount from the category's total
-      categoryMap[expenseToDelete.category].total -= expenseToDelete.amount;
-
-      // Remove the deleted expense's amount from the category's array
-      categoryMap[expenseToDelete.category].amounts = categoryMap[expenseToDelete.category].amounts.filter(
-        (amount) => amount !== expenseToDelete.amount
-      );
+    if (categoryMap[category]) {
+      const amountIndex = categoryMap[category].amounts.indexOf(amount);
+      if (amountIndex !== -1) {
+        categoryMap[category].amounts.splice(amountIndex, 1); // Remove the specific amount
+        categoryMap[category].total -= amount; // Adjust the total
+      }
     }
 
-    renderExpenses(); // Re-render the table to reflect the deletion
-    updateTotals();  // Update the total savings
+    // Update the total amount in the UI
+    if (category === "ACH/Deposit" || category === "Savings") {
+      const totalSavingsElement = document.getElementById("total-savings");
+      totalSavingsElement.textContent = `$ ${(parseFloat(totalSavingsElement.textContent.replace("$", "")) - amount).toFixed(2)}`;
+    } else if (category === "Bills" || category === "Subscriptions") {
+      const totalExpensesElement = document.getElementById("total-expenses");
+      totalExpensesElement.textContent = `$ ${(parseFloat(totalExpensesElement.textContent.replace("$", "")) - amount).toFixed(2)}`;
+    }
+
+    renderExpenses(); // Re-render the table
+    updateTotals();  // Update the category totals in the UI
   } else {
     console.error("Expense not found. Cannot delete.");
   }
@@ -205,9 +230,6 @@ const getGrandTotal = () => {
 };
 
 
-
-
-
 //Event Handlers 
 
 //Intial Input Form Handler
@@ -216,7 +238,8 @@ document.getElementById('expenseForm').addEventListener('submit', (e) => {
 
   const description = document.getElementById('description').value;
   const amount = document.getElementById('amount').value;
-  const category = document.getElementById('category').value;
+  const categorySelect = document.getElementById('category');
+  const category = categorySelect.options[categorySelect.selectedIndex].textContent.trim();
   const date = document.getElementById('date').value;
 
   addExpense(description, amount, category, date); // Add the expense
@@ -238,9 +261,3 @@ addTransactionButton.addEventListener('click', function(e) {
 
 deleteButton.addEventListener('click', deleteExpense);
 
-
-//Event Handlers for the Search Bar Events
-document.getElementById('searchBar').addEventListener('input', (event) => {
-  const query = event.target.value; // Get the current search query
-  filterExpensesById(query); // Call the filter function
-});
