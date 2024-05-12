@@ -34,24 +34,24 @@ Different Categories:
 Key Points of Functionality:
 
 - All Inputs from the Transaction Windows are Inputted Into The Table Correctly
-    - Implement Logic for When The Input Field is Not The Desired Input 
+    - Implement Logic for When The Input Field is Not The Desired Input ✅
     - Add Negatives for Expenses and Positives for Deposits 
-    - Logic to Require Input Before Starting with Budget
+    - Logic to Require Input Before Starting with Budget ✅
 
 - All Dashboard Elements Reflect the Information Properly 
-  - Total Budget
-  - Total Balance/Spending 
-  - Total Savings 
+  - Total Budget 
+  - Total Balance/Spending ✅
+  - Total Savings ✅
   - Current Budget 
 
 - Allowing for Deleting, Saving and Searching Expenses 
   - Search for Expense by Name or ID 
-  - Delete Expense by Button 
+  - Delete Expense by Button ✅
   - Save Expenses Over Time through Back End or Local Storage
 
 
-- Chart Element that Reflects the Information from The Dashboard Elements
-
-These key points will make for the MVP of this application. Once the logic and programming has been completed. We will work to add more modal windows and tightening up on the UI to increase the usability of this application. 
-
+Exta Features to Add to Project Log 
+  - Chart Section 
+  - UI Color and Font Update
+  - Animations and Transitions
 
