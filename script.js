@@ -7,7 +7,6 @@ let overlayWindow = document.getElementById("overlay-window");
 //Dashboard Elements
 let expectedBudget = document.getElementById("expected-budget");
 let currentBudget = document.getElementById("current-budget");
-let totalBalance = document.getElementById("total-balance");
 
 //Button Elements 
 let closeButton = document.getElementsByClassName("close")[0];
@@ -26,8 +25,21 @@ const categoryMap = {};
 
 //Transactions Functions 
 
+//Close Window Function
+const closeModalWindow = () => {
+  if (expenses.length === 0) {
+    alert("Please enter an Expense")
+  } else{
+    modalWindow.style.display = "none";
+    overlayWindow.style.display = "none";
+  }
+
+}
+
+
+
+
 //Function to Update Total Savings 
-//ADD FUNCTIONALITY FOR ALL CATEGORIES
 const updateTotals = () => {
   const categorySelect = document.getElementById('category');
   const selectedOption = categorySelect.options[categorySelect.selectedIndex];
@@ -65,16 +77,7 @@ const updateTotals = () => {
 const generateId = () => '_' + Math.random().toString(36).substr(2, 9);
 
 
-//Close Window Function
-const closeModalWindow = () => {
-  if (expenses.length === 0) {
-    alert("Please enter an Expense")
-  } else{
-    modalWindow.style.display = "none";
-    overlayWindow.style.display = "none";
-  }
 
-}
 
 //Function to Add Expeneses to Arrays and Objects
 const addExpense = (description, amount, category, date) => {
@@ -153,19 +156,6 @@ const renderExpenses = (filteredExpenses = expenses) => {
   });
 };
 
-// Function to filter expenses by ID and Render the Filtered Results
-const filterExpensesById = (query) => {
-  // Convert query to lowercase for case-insensitive matching
-  const lowerCaseQuery = query.toLowerCase();
-
-  // Filter the expenses by ID
-  const filteredExpenses = expenses.filter((expense) => {
-    return expense.id.toLowerCase().includes(lowerCaseQuery);
-  });
-
-  // Render the filtered results
-  renderExpenses(filteredExpenses);
-};
 
 
 
