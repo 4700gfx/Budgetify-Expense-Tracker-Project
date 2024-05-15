@@ -55,3 +55,10 @@ Exta Features to Add to Project Log
   - UI Color and Font Update
   - Animations and Transitions
 
+
+Remaining Tasks and Features
+
+-Responsive Search Bar 
+-Budget Modal 
+-Negatives for Expenses and Plus for Income 
+-UI Color and Font Update

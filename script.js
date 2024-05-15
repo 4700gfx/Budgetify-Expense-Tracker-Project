@@ -7,6 +7,7 @@ let overlayWindow = document.getElementById("overlay-window");
 //Dashboard Elements
 let expectedBudget = document.getElementById("expected-budget");
 let currentBudget = document.getElementById("current-budget");
+let budgetAmount = 0;
 
 //Button Elements 
 let closeButton = document.getElementsByClassName("close")[0];
@@ -23,9 +24,18 @@ let totalCurrentBudgetAmount = 0;
 const categoryMap = {};
 
 
-//Transactions Functions 
+//Transactions Functions
 
-//Close Window Function
+//Set Up Budget Amount 
+const setUpBudgetAmount = () => {
+  if (expectedBudget.textContent === '') { // Check if expectedBudget is empty
+    budgetAmount = Number(prompt("Enter Your Budget Amount"));
+    expectedBudget.textContent = budgetAmount; // Update the content of expectedBudget
+  }
+};
+
+
+
 const closeModalWindow = () => {
   if (expenses.length === 0) {
     alert("Please enter an Expense")
@@ -34,8 +44,11 @@ const closeModalWindow = () => {
     overlayWindow.style.display = "none";
   }
 
-}
+  if (expectedBudget === null) {
+    setUpBudgetAmount();
+  }
 
+}
 
 
 
