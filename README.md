@@ -42,7 +42,7 @@ Key Points of Functionality:
   - Total Budget 
   - Total Balance/Spending ✅
   - Total Savings ✅
-  - Current Budget 
+  - Current Budget ✅
 
 - Allowing for Deleting, Saving and Searching Expenses 
   - Search for Expense by Name or ID 
@@ -59,6 +59,6 @@ Exta Features to Add to Project Log
 Remaining Tasks and Features
 
 -Responsive Search Bar 
--Budget Modal 
+-Budget Modal ✅
 -Negatives for Expenses and Plus for Income 
 -UI Color and Font Update

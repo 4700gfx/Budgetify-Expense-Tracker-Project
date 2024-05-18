@@ -5,9 +5,7 @@ let modalWindow = document.getElementById("modal-window");
 let overlayWindow = document.getElementById("overlay-window");
 
 //Dashboard Elements
-let expectedBudget = document.getElementById("expected-budget");
-let currentBudget = document.getElementById("current-budget");
-let budgetAmount = 0;
+
 
 //Button Elements 
 let closeButton = document.getElementsByClassName("close")[0];
@@ -19,7 +17,8 @@ let deleteButton = document.getElementById("delete-button");
 let expenses = [];
 let savings = [];
 let totalBudget = 0;
-let totalCurrentBudgetAmount = 0;
+let currentBudget = 0;
+let budgetAmount; // Global variable to store the initial budget amount
 
 const categoryMap = {};
 
@@ -27,12 +26,33 @@ const categoryMap = {};
 //Transactions Functions
 
 //Set Up Budget Amount 
+
 const setUpBudgetAmount = () => {
-  if (expectedBudget.textContent === '') { // Check if expectedBudget is empty
-    budgetAmount = Number(prompt("Enter Your Budget Amount"));
-    expectedBudget.textContent = budgetAmount; // Update the content of expectedBudget
+  // Prompt user to set up budget amount
+  let startingBudgetAmount = Number(prompt("Set Up Your Budget Amount 💸"));
+
+  // Validate input
+  if (isNaN(startingBudgetAmount) || startingBudgetAmount <= 0) {
+    // Show error message if input is not a valid positive number
+    alert("Please enter a valid positive number for your budget amount.");
+    // Call the function recursively to prompt again
+    setUpBudgetAmount();
+  } else {
+    // If input is valid, set current budget
+    budgetAmount = startingBudgetAmount;
+    // Update expected budget in UI
+    const expectedBudget = document.getElementById("expected-budget");
+    expectedBudget.textContent = `$ ${budgetAmount.toFixed(2)}`;
+    // Update current budget element in UI
+    const currentBudgetElement = document.getElementById("current-budget");
+    currentBudgetElement.textContent = `$ ${budgetAmount.toFixed(2)}`;
   }
 };
+
+setUpBudgetAmount(); 
+
+
+
 
 
 
@@ -44,45 +64,74 @@ const closeModalWindow = () => {
     overlayWindow.style.display = "none";
   }
 
-  if (expectedBudget === null) {
-    setUpBudgetAmount();
-  }
 
 }
 
 
 
 //Function to Update Total Savings 
+
 const updateTotals = () => {
-  const categorySelect = document.getElementById('category');
-  const selectedOption = categorySelect.options[categorySelect.selectedIndex];
-  const categoryText = selectedOption.textContent.trim(); // Get the text of the selected option
+  // Calculate total expenses and total savings
+  let totalExpenses = 0;
+  let totalSavings = 0;
 
-  // Find the corresponding total element based on the selected category text
-  let totalElement = null;
-  let categoriesToUpdate = []; // Array to store categories for combined totals
-  if (categoryText === "Subscriptions" || categoryText === "Bills") {
-    totalElement = document.getElementById("total-expenses");
-    categoriesToUpdate = ["Subscriptions", "Bills"];
-  } else if (categoryText === "ACH/Direct Deposit" || categoryText === "Savings") {
-    totalElement = document.getElementById("total-savings");
-    categoriesToUpdate = ["ACH/Direct Deposit", "Savings"];
-  } else {
-    console.error(`UI element for category ${categoryText} not found.`);
-    return; // Exit the function if category element is not found
-  }
-
-  // Get the total for the selected categories from expenses array
-  let total = 0;
-  expenses.forEach(expense => {
-    if (categoriesToUpdate.includes(expense.category)) {
-      total += parseFloat(expense.amount);
+  // Calculate total expenses and savings
+  expenses.forEach((expense) => {
+    if (expense.category === "Subscriptions" || expense.category === "Bills") {
+      totalExpenses += parseFloat(expense.amount);
+    } else if (expense.category === "ACH/Direct Deposit" || expense.category === "Savings") {
+      totalSavings += parseFloat(expense.amount);
     }
   });
 
-  // Update the total element with the formatted updated total amount
-  totalElement.textContent = `$ ${total.toFixed(2)}`;
+  // Update the total-expenses and total-savings elements
+  const totalExpensesElement = document.getElementById("total-expenses");
+  totalExpensesElement.textContent = `-$${totalExpenses.toFixed(2)}`;
+  totalExpensesElement.style.color = 'red';
+
+  const totalSavingsElement = document.getElementById("total-savings");
+  totalSavingsElement.textContent = `+$${totalSavings.toFixed(2)}`;
+  totalSavingsElement.style.color = 'green';
+
 };
+
+
+
+
+
+
+
+// const updateTotals = () => {
+//   const categorySelect = document.getElementById('category');
+//   const selectedOption = categorySelect.options[categorySelect.selectedIndex];
+//   const categoryText = selectedOption.textContent.trim(); // Get the text of the selected option
+
+//   // Find the corresponding total element based on the selected category text
+//   let totalElement = null;
+//   let categoriesToUpdate = []; // Array to store categories for combined totals
+//   if (categoryText === "Subscriptions" || categoryText === "Bills") {
+//     totalElement = document.getElementById("total-expenses");
+//     categoriesToUpdate = ["Subscriptions", "Bills"];
+//   } else if (categoryText === "ACH/Direct Deposit" || categoryText === "Savings") {
+//     totalElement = document.getElementById("total-savings");
+//     categoriesToUpdate = ["ACH/Direct Deposit", "Savings"];
+//   } else {
+//     console.error(`UI element for category ${categoryText} not found.`);
+//     return; // Exit the function if category element is not found
+//   }
+
+//   // Get the total for the selected categories from expenses array
+//   let total = 0;
+//   expenses.forEach(expense => {
+//     if (categoriesToUpdate.includes(expense.category)) {
+//       total += parseFloat(expense.amount);
+//     }
+//   });
+
+//   // Update the total element with the formatted updated total amount
+//   totalElement.textContent = `$ ${total.toFixed(2)}`;
+// };
 
 
 
@@ -149,6 +198,7 @@ const addExpense = (description, amount, category, date) => {
 
 
 // Function to Render the Expenses on The Table and Display Categories
+
 const renderExpenses = (filteredExpenses = expenses) => {
   const tableBody = document.getElementById('expenseTable').querySelector('tbody');
   tableBody.innerHTML = ''; // Clear existing content
@@ -156,9 +206,23 @@ const renderExpenses = (filteredExpenses = expenses) => {
   filteredExpenses.forEach((expense) => {
     const row = document.createElement('tr');
 
+    // Determine the sign and color of the amount based on the category
+    let formattedAmount;
+    let amountColor;
+    if (expense.category === "Subscriptions" || expense.category === "Bills") {
+      formattedAmount = `-$${expense.amount.toFixed(2)}`;
+      amountColor = 'red';
+    } else if (expense.category === "ACH/Direct Deposit" || expense.category === "Savings") {
+      formattedAmount = `+$${expense.amount.toFixed(2)}`;
+      amountColor = 'green';
+    } else {
+      formattedAmount = `$${expense.amount.toFixed(2)}`; // Default formatting for other categories
+      amountColor = 'black';
+    }
+
     row.innerHTML = `
       <td>${expense.description}</td>
-      <td>$${expense.amount.toFixed(2)}</td>
+      <td style="color: ${amountColor};">${formattedAmount}</td>
       <td>${expense.category}</td>
       <td>${expense.date}</td>
       <td>${expense.id}</td>
@@ -168,6 +232,8 @@ const renderExpenses = (filteredExpenses = expenses) => {
     tableBody.appendChild(row); // Add the row to the table
   });
 };
+
+
 
 
 
@@ -231,6 +297,38 @@ const getGrandTotal = () => {
 
   return grandTotal; // Return the grand total
 };
+
+
+//Function To Search for Expenses or ID 
+
+const handleSearch = () => {
+  const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
+  renderSearchResults(searchInput);
+};
+
+// Function to render search results
+const renderSearchResults = (searchInput) => {
+  const tableRows = document.querySelectorAll('#expenseTable tbody tr');
+
+  tableRows.forEach(row => {
+      const descriptionCell = row.cells[0].textContent.toLowerCase(); // Assuming Description is the first column
+      const idCell = row.cells[4].textContent.toLowerCase(); // Assuming ID is the fifth column
+
+      if (searchInput === '') {
+          row.style.display = ''; // Show all rows if search input is empty
+      } else {
+          // Show row if ID or Description matches the search input
+          if (idCell.includes(searchInput) || descriptionCell.includes(searchInput)) {
+              row.style.display = ''; 
+          } else {
+              row.style.display = 'none'; // Hide row if no match found
+          }
+      }
+  });
+};
+
+
+
 
 
 //Event Handlers 
