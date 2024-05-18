@@ -42,12 +42,13 @@ const setUpBudgetAmount = () => {
     budgetAmount = startingBudgetAmount;
     // Update expected budget in UI
     const expectedBudget = document.getElementById("expected-budget");
-    expectedBudget.textContent = `$ ${budgetAmount.toFixed(2)}`;
+    expectedBudget.textContent = `$ ${startingBudgetAmount.toFixed(2)}`;
     // Update current budget element in UI
     const currentBudgetElement = document.getElementById("current-budget");
     currentBudgetElement.textContent = `$ ${budgetAmount.toFixed(2)}`;
+    console.log(budgetAmount);
+  };
   }
-};
 
 setUpBudgetAmount(); 
 
@@ -68,14 +69,12 @@ const closeModalWindow = () => {
 }
 
 
-
-//Function to Update Total Savings 
-
+//Function to Update Total Expenses and Savings 
 const updateTotals = () => {
   // Calculate total expenses and total savings
   let totalExpenses = 0;
   let totalSavings = 0;
-
+  
   // Calculate total expenses and savings
   expenses.forEach((expense) => {
     if (expense.category === "Subscriptions" || expense.category === "Bills") {
@@ -96,42 +95,6 @@ const updateTotals = () => {
 
 };
 
-
-
-
-
-
-
-// const updateTotals = () => {
-//   const categorySelect = document.getElementById('category');
-//   const selectedOption = categorySelect.options[categorySelect.selectedIndex];
-//   const categoryText = selectedOption.textContent.trim(); // Get the text of the selected option
-
-//   // Find the corresponding total element based on the selected category text
-//   let totalElement = null;
-//   let categoriesToUpdate = []; // Array to store categories for combined totals
-//   if (categoryText === "Subscriptions" || categoryText === "Bills") {
-//     totalElement = document.getElementById("total-expenses");
-//     categoriesToUpdate = ["Subscriptions", "Bills"];
-//   } else if (categoryText === "ACH/Direct Deposit" || categoryText === "Savings") {
-//     totalElement = document.getElementById("total-savings");
-//     categoriesToUpdate = ["ACH/Direct Deposit", "Savings"];
-//   } else {
-//     console.error(`UI element for category ${categoryText} not found.`);
-//     return; // Exit the function if category element is not found
-//   }
-
-//   // Get the total for the selected categories from expenses array
-//   let total = 0;
-//   expenses.forEach(expense => {
-//     if (categoriesToUpdate.includes(expense.category)) {
-//       total += parseFloat(expense.amount);
-//     }
-//   });
-
-//   // Update the total element with the formatted updated total amount
-//   totalElement.textContent = `$ ${total.toFixed(2)}`;
-// };
 
 
 
@@ -158,7 +121,6 @@ const addExpense = (description, amount, category, date) => {
     return; // Exit early if invalid
   }
 
-
   // Validate the amount to ensure it's a valid number
   if (isNaN(newExpense.amount)) {
     console.error("Invalid amount: Please provide a valid number.");
@@ -177,7 +139,7 @@ const addExpense = (description, amount, category, date) => {
     return; // Exit early
   }
 
-  // If all validations pass, add the new expense to the array and re-render the table
+  // If all validations pass, add the new expense to the array
   expenses.push(newExpense);
 
   // Update the categoryMap with the new expense
@@ -192,9 +154,33 @@ const addExpense = (description, amount, category, date) => {
     };
   }
 
+  // Update the current budget based on the latest expense
+  updateCurrentBudget(newExpense);
+
+  // Re-render the expenses and update the totals in the UI
   renderExpenses(); // Re-render the table
-  updateTotals();  // Update the category totals in the UI
+  updateTotals();   // Update the category totals in the UI
 };
+
+const updateCurrentBudget = (expense) => {
+  // Update the current budget based on the category of the new expense
+  if (expense.category === "Subscriptions" || expense.category === "Bills") {
+    budgetAmount -= expense.amount;
+  } else if (expense.category === "ACH/Direct Deposit" || expense.category === "Savings") {
+    budgetAmount += expense.amount;
+  }
+
+  // Update the current budget display
+  const currentBudgetElement = document.getElementById("current-budget");
+  if (currentBudgetElement) {
+    currentBudgetElement.textContent = `$${budgetAmount.toFixed(2)}`;
+  } else {
+    console.warn('Current budget element not found');
+  }
+};
+
+
+
 
 
 // Function to Render the Expenses on The Table and Display Categories
@@ -236,9 +222,8 @@ const renderExpenses = (filteredExpenses = expenses) => {
 
 
 
-
-
 //Function to Delete an Expense
+
 const deleteExpense = (expenseId) => {
   // Find the expense to delete
   const expenseIndex = expenses.findIndex((expense) => expense.id === expenseId);
@@ -260,13 +245,19 @@ const deleteExpense = (expenseId) => {
       }
     }
 
-    // Update the total amount in the UI
-    if (category === "ACH/Deposit" || category === "Savings") {
-      const totalSavingsElement = document.getElementById("total-savings");
-      totalSavingsElement.textContent = `$ ${(parseFloat(totalSavingsElement.textContent.replace("$", "")) - amount).toFixed(2)}`;
-    } else if (category === "Bills" || category === "Subscriptions") {
-      const totalExpensesElement = document.getElementById("total-expenses");
-      totalExpensesElement.textContent = `$ ${(parseFloat(totalExpensesElement.textContent.replace("$", "")) - amount).toFixed(2)}`;
+    // Update the current budget based on the category of the deleted expense
+    if (category === "Subscriptions" || category === "Bills") {
+      budgetAmount += amount; // Add back the amount for expense categories
+    } else if (category === "ACH/Direct Deposit" || category === "Savings") {
+      budgetAmount -= amount; // Subtract the amount for savings categories
+    }
+
+    // Update the current budget display
+    const currentBudgetElement = document.getElementById("current-budget");
+    if (currentBudgetElement) {
+      currentBudgetElement.textContent = `$${budgetAmount.toFixed(2)}`;
+    } else {
+      console.warn('Current budget element not found');
     }
 
     renderExpenses(); // Re-render the table
@@ -275,6 +266,7 @@ const deleteExpense = (expenseId) => {
     console.error("Expense not found. Cannot delete.");
   }
 };
+
 
 
 // Function to get Grand Total Amounts from the Category Map
@@ -300,7 +292,6 @@ const getGrandTotal = () => {
 
 
 //Function To Search for Expenses or ID 
-
 const handleSearch = () => {
   const searchInput = document.getElementById('searchInput').value.trim().toLowerCase();
   renderSearchResults(searchInput);
@@ -331,7 +322,8 @@ const renderSearchResults = (searchInput) => {
 
 
 
-//Event Handlers 
+//Event Handlers
+
 
 //Intial Input Form Handler
 document.getElementById('expenseForm').addEventListener('submit', (e) => {

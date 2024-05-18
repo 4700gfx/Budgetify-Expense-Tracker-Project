@@ -24,18 +24,17 @@ font-family: "DM Sans", sans-serif;
 In terms of functionality, we want to make sure that expense table works in tandenm with the Transaction Input Window. The Dashboard should update all of the totals of different categories. 
 
 Different Categories:
-- Deposits 
-- Savings  
-- Utlities 
-- Main Bills 
-- Subscriptions 
-- Misc. 
+- Deposits ✅
+- Savings  ✅
+- Main Bills ✅
+- Subscriptions ✅ 
+- Misc. ✅
 
 Key Points of Functionality:
 
 - All Inputs from the Transaction Windows are Inputted Into The Table Correctly
     - Implement Logic for When The Input Field is Not The Desired Input ✅
-    - Add Negatives for Expenses and Positives for Deposits 
+    - Add Negatives for Expenses and Positives for Deposits ✅
     - Logic to Require Input Before Starting with Budget ✅
 
 - All Dashboard Elements Reflect the Information Properly 
@@ -45,7 +44,7 @@ Key Points of Functionality:
   - Current Budget ✅
 
 - Allowing for Deleting, Saving and Searching Expenses 
-  - Search for Expense by Name or ID 
+  - Search for Expense by Name or ID ✅
   - Delete Expense by Button ✅
   - Save Expenses Over Time through Back End or Local Storage
 
@@ -58,7 +57,7 @@ Exta Features to Add to Project Log
 
 Remaining Tasks and Features
 
--Responsive Search Bar 
+-Responsive Search Bar ✅
 -Budget Modal ✅
--Negatives for Expenses and Plus for Income 
+-Negatives for Expenses and Plus for Income ✅
 -UI Color and Font Update
