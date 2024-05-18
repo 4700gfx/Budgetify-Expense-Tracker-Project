@@ -316,7 +316,7 @@ const renderSearchResults = (searchInput) => {
           }
       }
   });
-};
+};  
 
 
 
@@ -343,14 +343,14 @@ document.getElementById('expenseForm').addEventListener('submit', (e) => {
 
 
 // Event Handlers for the Buttons Events 
-enterTransactionButton.addEventListener('click', addExpense);
+enterTransactionButton.addEventListener('click', addExpense); //Enter Transaction
 
-closeButton.addEventListener('click', closeModalWindow);
+closeButton.addEventListener('click', closeModalWindow); //Close Transaction Window 
 
 addTransactionButton.addEventListener('click', function(e) {
   modalWindow.style.display = "flex";
   overlayWindow.style.display = "block";
-});
+}); //Add Transaction After Transaction Has Been Added
 
-deleteButton.addEventListener('click', deleteExpense);
+deleteButton.addEventListener('click', deleteExpense); //Delete Transaction Button
 
