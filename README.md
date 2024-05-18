@@ -38,7 +38,7 @@ Key Points of Functionality:
     - Logic to Require Input Before Starting with Budget ✅
 
 - All Dashboard Elements Reflect the Information Properly 
-  - Total Budget 
+  - Total Budget ✅
   - Total Balance/Spending ✅
   - Total Savings ✅
   - Current Budget ✅
@@ -49,11 +49,6 @@ Key Points of Functionality:
   - Save Expenses Over Time through Back End or Local Storage
 
 
-Exta Features to Add to Project Log 
-  - Chart Section 
-  - UI Color and Font Update
-  - Animations and Transitions
-
 
 Remaining Tasks and Features
 
@@ -61,3 +56,17 @@ Remaining Tasks and Features
 -Budget Modal ✅
 -Negatives for Expenses and Plus for Income ✅
 -UI Color and Font Update
+
+As of May 18, 2024. I completed the MVP of Budgetify. 
+I wanted to creat the core functionality for inputing budgets and keeping track of them through the dashboard. 
+We want to add more functions to the interface and also improve the UI. Look below for the updcoming updates:
+
+Exta Features to Add to Project Log 
+  - Chart Section 
+  - UI Color and Font Update
+  - Animations and Transitions
+
+Programming Team: Shekelton Jean 
+Technology Used: HTML, CSS, Vanilla JavaScript and Chat-GPT 3.5 
+4700 GFX 
+
